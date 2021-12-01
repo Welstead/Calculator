@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Calculator
 {
