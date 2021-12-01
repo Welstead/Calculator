@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Calculator
 {
@@ -19,12 +18,6 @@ namespace Calculator
                 input1 = Convert.ToDouble(Console.ReadLine());
                 Console.WriteLine("Enter the second number: ");
                 input2 = Convert.ToDouble(Console.ReadLine());
-                if (input2 == 0)
-                {
-                    Console.WriteLine("Cannot divide by 0 ... restarting" + "\n");
-                    Thread.Sleep(2000);
-                    Main(args);
-                }
             }
             catch (Exception)
             {
@@ -35,16 +28,17 @@ namespace Calculator
 
             }
 
-            do
+            Console.WriteLine("Enter the function you would like to use (+ , - , * or /): ");
+            function = Console.ReadLine();
+
+            while (function != "+" && function != "-" && function != "*" && function != "/")
             {
+                Console.WriteLine("Please enter a valid function!");
+                Thread.Sleep(1000);
                 Console.WriteLine("Enter the function you would like to use (+ , - , * or /): ");
                 function = Console.ReadLine();
-
-
-            } while (function != "+" && function != "-" && function != "*" && function != "/");
-                
+            }   
             
-
             if (function == "+")
             {
                 Console.WriteLine("{0} + {1} = {2}",input1,input2, Add(input1, input2));
@@ -60,16 +54,24 @@ namespace Calculator
             }
             else if (function == "/")
             {
-                Console.WriteLine("{0} ÷ {1} = {2}", input1, input2, Divide(input1, input2));
+                if(input2 == 0){
+                    Console.WriteLine("Cannot divide by 0.. restarting");
+                    Thread.Sleep(1000);
+                    Main(args);
+                }
+                else
+                {
+                    Console.WriteLine("{0} ÷ {1} = {2}", input1, input2, Divide(input1, input2));
+                }
             }
 
-            Console.WriteLine("Would you like to go again? Press 'Y' if yes, anything else if not:  ");
+            Console.WriteLine("Would you like to go again? Enter 'Y' if yes, anything else if not:  ");
             answer = Console.ReadLine().ToLower();
             if(answer == "y")
             {
-                Main(args);
+                Main(args);//Restart
             }
-            
+            //End program
 
         }
         public static double Add(double input1, double input2)
