@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Calculator
 {
@@ -23,6 +24,7 @@ namespace Calculator
             {
                 Console.WriteLine("Must enter a valid number");
                 Thread.Sleep(2000);
+                
                 Main(args);//Restarts the application
                 
 
@@ -71,7 +73,8 @@ namespace Calculator
             {
                 Main(args);//Restart
             }
-            //End program
+            Environment.Exit(0);
+
 
         }
         public static double Add(double input1, double input2)
@@ -90,6 +93,5 @@ namespace Calculator
         {
             return input1 / input2;
         }
-        
     }
 }
