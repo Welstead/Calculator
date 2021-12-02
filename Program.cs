@@ -14,9 +14,9 @@ namespace Calculator
             
             try
             {
-                Console.WriteLine("Enter the first number: ");
+                Console.Write("Enter the first number: ");
                 input1 = Convert.ToDouble(Console.ReadLine());
-                Console.WriteLine("Enter the second number: ");
+                Console.Write("Enter the second number: ");
                 input2 = Convert.ToDouble(Console.ReadLine());
             }
             catch (Exception)
@@ -29,14 +29,14 @@ namespace Calculator
 
             }
 
-            Console.WriteLine("Enter the function you would like to use (+ , - , * or /): ");
+            Console.Write("Enter the function you would like to use (+ , - , * or /): ");
             function = Console.ReadLine();
 
             while (function != "+" && function != "-" && function != "*" && function != "/")
             {
                 Console.WriteLine("Please enter a valid function!");
                 Thread.Sleep(1000);
-                Console.WriteLine("Enter the function you would like to use (+ , - , * or /): ");
+                Console.Write("Enter the function you would like to use (+ , - , * or /): ");
                 function = Console.ReadLine();
             }   
             
