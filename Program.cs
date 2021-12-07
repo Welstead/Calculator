@@ -5,92 +5,85 @@ namespace Calculator
 {
     internal class Program
     {
+        private static double input1 = 0;
+        private static double input2 = 0;
+        private static double answer = 0;
+        private static string function;
+        private static string tryAgain;
+        private static bool running = true;
         static void Main(string[] args)
         {
-            double input1 = 0;
-            double input2 = 0;
-            string function;
-            string answer;
-            
-            try
+            while (running)
             {
-                Console.Write("Enter the first number: ");
-                input1 = Convert.ToDouble(Console.ReadLine());
-                Console.Write("Enter the second number: ");
-                input2 = Convert.ToDouble(Console.ReadLine());
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Must enter a valid number");
-                Thread.Sleep(2000);
-                
-                Main(args);//Restarts the application
-                
-
+                try
+                {
+                    GetNumbers();
+                    GetFunction();
+                    DisplayAnswer();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    function = "";
+                    TryAgain();
+                }
             }
 
-            Console.Write("Enter the function you would like to use (+ , - , * or /): ");
-            function = Console.ReadLine();
-
+        }
+        public static void GetNumbers()
+        {
+            Console.Write("Enter the first number: ");
+            input1 = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Enter the second number: ");
+            input2 = Convert.ToDouble(Console.ReadLine());
+        }
+        public static void GetFunction()
+        {
             while (function != "+" && function != "-" && function != "*" && function != "/")
             {
-                Console.WriteLine("Please enter a valid function!");
-                Thread.Sleep(1000);
                 Console.Write("Enter the function you would like to use (+ , - , * or /): ");
                 function = Console.ReadLine();
-            }   
-            
-            if (function == "+")
-            {
-                Console.WriteLine("{0} + {1} = {2}",input1,input2, Add(input1, input2));
-
             }
-            else if (function == "-")
-            {
-                Console.WriteLine("{0} - {1} = {2}", input1, input2, Subtract(input1, input2));
-            }
-            else if (function == "*")
-            {
-                Console.WriteLine("{0} x {1} = {2}", input1, input2, Multiply(input1, input2));
-            }
-            else if (function == "/")
-            {
-                if(input2 == 0){
-                    Console.WriteLine("Cannot divide by 0.. restarting");
-                    Thread.Sleep(1000);
-                    Main(args);
-                }
-                else
-                {
-                    Console.WriteLine("{0} ÷ {1} = {2}", input1, input2, Divide(input1, input2));
-                }
-            }
-
-            Console.WriteLine("Would you like to go again? Enter 'Y' if yes, anything else if not:  ");
-            answer = Console.ReadLine().ToLower();
-            if(answer == "y")
-            {
-                Main(args);//Restart
-            }
-            Environment.Exit(0);
-
-
         }
-        public static double Add(double input1, double input2)
+        public static void DisplayAnswer()
         {
-            return input1 + input2;
+            if (input2 == 0 && function == "/")
+            {
+                Console.WriteLine("Cannot divide by 0!");
+            }
+            else
+            {
+                answer = HandleEquation(input1, input2, function);
+                Console.WriteLine($"{ input1 } { function } { input2 } = { answer }");
+            }
         }
-        public static double Subtract(double input1, double input2)
+        public static void TryAgain()
         {
-            return input1 - input2;
+            Console.WriteLine("Enter 'q' to quit, or press enter to go again: ");
+            tryAgain = Console.ReadLine().ToLower();
+            if (tryAgain == "q")
+            {
+                running = false;
+            }
         }
-        public static double Multiply(double input1, double input2)
+        public static double HandleEquation(double input1, double input2, string func)
         {
-            return input1 * input2;
-        }
-        public static double Divide(double input1, double input2)
-        {
-            return input1 / input2;
+            switch (func)
+            {
+                case "+":
+                    return input1 + input2;
+                case "-":
+                    return input1 - input2;
+                case "*":
+                    return input1 * input2;
+                case "/":
+                    return input1 / input2;
+                default:
+                    return 0;
+            }
         }
     }
 }
